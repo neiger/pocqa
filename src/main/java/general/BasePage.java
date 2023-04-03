@@ -1,0 +1,114 @@
+package general;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import io.appium.java_client.AppiumFluentWait;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.*;
+
+public abstract class BasePage {
+
+    protected AndroidDriver<MobileElement> driver;
+    private final AppiumFluentWait<AndroidDriver<MobileElement>> wait;
+
+    private final int staticTimeOut;
+
+    // CONSTRUCTOR - Receiving webdriver as a parameter to save it on a global variable to be used later
+    public BasePage(AndroidDriver<MobileElement> driver) {
+        this.driver = driver;
+        this.staticTimeOut = MobileDriverManager.getStaticTime();
+        int dynamicTimeOut = MobileDriverManager.getDynamicTime();
+        this.wait = new AppiumFluentWait<>(driver);
+        this.wait.withTimeout(Duration.ofSeconds(dynamicTimeOut));
+
+    }
+
+    /****** GENERIC METHODS ******/
+
+    public abstract boolean verifyLoads();
+
+    // method to wait for the visibility of an element
+    protected boolean waitForElementToBeVisible(MobileElement element) {
+        boolean flag;
+        flag = this.wait.until(arg0 -> element != null && element.isDisplayed());
+        return flag;
+    }
+
+    protected boolean waitForElementToBeClickable(MobileElement element) {
+        boolean flag;
+        flag = this.wait.until(arg0 -> element.isEnabled());
+        return flag;
+    }
+
+    // method to wait for an element to be clickable
+    protected boolean tapElement(MobileElement element) {
+        boolean flag;
+        flag = waitForElementToBeVisible(element) && waitForElementToBeClickable(element) &&
+                this.wait.until(arg0 -> {
+                    element.click();
+                    return true;
+                });
+        return flag;
+    }
+
+    // method to enter text on specific field
+    protected boolean sendTextOnCleanElement(MobileElement element, String txt) {
+
+        boolean validationReturn = false;
+
+        if (waitForElementToBeClickable(element)) {
+            element.click();
+            element.clear();
+            validationReturn = typeOnTxtElement(element, txt);
+        }
+        return validationReturn;
+    }
+
+    private boolean typeOnTxtElement(MobileElement element, String txt) {
+        element.sendKeys(txt);
+        return element.isEnabled();
+        //true;//element.getTagName().contains(txt);
+    }
+
+    // method to verify text on a certain element
+    protected boolean verifyTextOnElement(MobileElement element, String text) {
+        boolean flag;
+        flag = waitForElementToBeVisible(element) &&
+                this.wait.until(arg0 -> element.getText().contains(text));
+        return flag;
+    }
+
+    protected boolean implicityWaitTimeOnScreen() {
+        try {
+            TimeUnit.SECONDS.sleep(this.staticTimeOut);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    protected String getTextFromElement(MobileElement element) {
+        String flag = "";
+        if (waitForElementToBeVisible(element))
+        {
+            flag = element.getText();
+        }
+        return flag;
+    }
+
+    //     driver.getKeyboard().pressKey(Keys.ENTER);
+    protected boolean pressKeyboardKey(Keys keyValue) {
+        boolean flag = false;
+        if(keyValue != null) {
+            driver.getKeyboard().pressKey(keyValue);
+            flag = true;
+        } else {
+            System.out.println("[ERROR]    There is a problem with the Key pressed");
+        }
+
+        return flag;
+    }
+}
