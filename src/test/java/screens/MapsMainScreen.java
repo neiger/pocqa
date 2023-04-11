@@ -60,3 +60,4 @@ public class MapsMainScreen extends BasePage {
     public boolean tapOnMyLocationBtn(){
         return tapElement(myLocationBtn);
     }
+}
