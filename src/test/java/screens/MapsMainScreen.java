@@ -56,4 +56,7 @@ public class MapsMainScreen extends BasePage {
     public boolean navigateToCC(){
         return tapElement(directionsBtn);
     }
-}
+
+    public boolean tapOnMyLocationBtn(){
+        return tapElement(myLocationBtn);
+    }
