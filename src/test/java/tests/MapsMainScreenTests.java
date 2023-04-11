@@ -21,3 +21,5 @@ public class MapsMainScreenTests extends MobileDriverManager {
         Assert.assertTrue(mapsMainScreen.waitForAFewSecondsOnScreen(), "[ERROR]    The app did not halt on screen");
     }
 }
+
+// just a comment to commit
