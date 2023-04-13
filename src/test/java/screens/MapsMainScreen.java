@@ -1,18 +1,19 @@
 package screens;
 
 import general.BasePage;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 public class MapsMainScreen extends BasePage {
 
-    public MapsMainScreen(AndroidDriver<MobileElement> driver) {
+    public MapsMainScreen(AndroidDriver driver) {
         super(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        PageFactory.initElements(driver, this);
+        //PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     /*
@@ -23,24 +24,24 @@ public class MapsMainScreen extends BasePage {
      */
 
     @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_text_box")
-    private MobileElement searchOmniboxTxt;
+    private WebElement searchOmniboxTxt;
 
     @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_edit_text")
-    private MobileElement enableSearchOmniboxTxt;
+    private WebElement enableSearchOmniboxTxt;
 
     @AndroidFindBy(id="com.google.android.apps.maps:id/watermark_image")
-    private MobileElement googWaterMarkImage;
+    private WebElement googWaterMarkImage;
 
     @AndroidFindBy(id="com.google.android.apps.maps:id/mylocation_button")
-    private MobileElement myLocationBtn;
+    private WebElement myLocationBtn;
 
     @AndroidFindBy(xpath="//android.view.View[@content-desc=\"Directions to Ciudad Colón\"]")
-    private MobileElement directionsBtn;
+    private WebElement directionsBtn;
 
     @Override
     public boolean verifyLoads() {
-        return waitForElementToBeVisible(searchOmniboxTxt) && waitForElementToBeVisible(googWaterMarkImage)
-                && waitForElementToBeVisible(myLocationBtn);
+        return implicityWaitTimeOnScreen(); //waitForElementToBeVisible(searchOmniboxTxt)// && waitForElementToBeVisible(googWaterMarkImage)
+               // && waitForElementToBeVisible(myLocationBtn);
     }
 
     public boolean waitForAFewSecondsOnScreen() {

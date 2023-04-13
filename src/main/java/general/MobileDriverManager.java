@@ -1,6 +1,5 @@
 package general;
 
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -49,12 +48,11 @@ public class MobileDriverManager extends TestListenerAdapter {
         capability.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
         capability.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
         capability.setCapability(MobileCapabilityType.AUTOMATION_NAME, automationName);
-        //capability.setCapability(MobileCapabilityType.APP, appPath); // In case apk needs to be installed
         capability.setCapability("appPackage", appPath);
         capability.setCapability("appActivity", appActivity);
         capability.setCapability(MobileCapabilityType.NO_RESET, noReset);
 
-        mobAppiumDriver.set(new AndroidDriver<MobileElement>(new URL(appiumServer), capability));
+        mobAppiumDriver.set(new AndroidDriver(new URL(appiumServer), capability));
     }
 
     // driver initiator which gets ready in the @BeforeMethod and does not require to be passed
@@ -64,7 +62,7 @@ public class MobileDriverManager extends TestListenerAdapter {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void deleteDriver() {
+    public void deleteDriver() throws NullPointerException{
         System.out.println("[DRIVER MSG]  ---- The browser driver is being close now");
         getDriver().quit();
     }
