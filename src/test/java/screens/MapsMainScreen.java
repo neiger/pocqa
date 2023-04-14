@@ -2,9 +2,9 @@ package screens;
 
 import general.BasePage;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -12,8 +12,8 @@ public class MapsMainScreen extends BasePage {
 
     public MapsMainScreen(AndroidDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
-        //PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        //PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     /*
@@ -22,8 +22,7 @@ public class MapsMainScreen extends BasePage {
      *
      *
      */
-
-    @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_text_box")
+    @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_text_boxx")
     private WebElement searchOmniboxTxt;
 
     @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_edit_text")
@@ -40,8 +39,8 @@ public class MapsMainScreen extends BasePage {
 
     @Override
     public boolean verifyLoads() {
-        return implicityWaitTimeOnScreen(); //waitForElementToBeVisible(searchOmniboxTxt)// && waitForElementToBeVisible(googWaterMarkImage)
-               // && waitForElementToBeVisible(myLocationBtn);
+        return waitForElementToBeVisible(searchOmniboxTxt)// && waitForElementToBeVisible(googWaterMarkImage)
+               && waitForElementToBeVisible(myLocationBtn);
     }
 
     public boolean waitForAFewSecondsOnScreen() {
@@ -51,7 +50,7 @@ public class MapsMainScreen extends BasePage {
     public boolean typeAnAddressInOmniBoxSearch(String location) {
         return tapElement(searchOmniboxTxt) &&
                 sendTextOnCleanElement(enableSearchOmniboxTxt, location) &&
-                pressKeyboardKey(Keys.ENTER);
+                pressKeyboardKey(AndroidKey.ENTER);
     }
 
     public boolean navigateToCC(){

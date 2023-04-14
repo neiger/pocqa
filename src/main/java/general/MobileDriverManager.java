@@ -40,19 +40,21 @@ public class MobileDriverManager extends TestListenerAdapter {
                                 String noReset, String appiumServer) throws Exception {
 
         System.out.println("[DRIVER MSG]  ---- The mobile test driver is being initialized now");
+try {
+    DesiredCapabilities capability = new DesiredCapabilities();
 
-        DesiredCapabilities capability = new DesiredCapabilities();
+    // Android Device capabilities
+    capability.setCapability(MobileCapabilityType.PLATFORM_NAME, platformName);
+    capability.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
+    capability.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
+    capability.setCapability(MobileCapabilityType.AUTOMATION_NAME, automationName);
+    capability.setCapability("appPackage", appPath);
+    capability.setCapability("appActivity", appActivity);
+    capability.setCapability(MobileCapabilityType.NO_RESET, noReset);
 
-        // Android Device capabilities
-        capability.setCapability(MobileCapabilityType.PLATFORM_NAME, platformName);
-        capability.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
-        capability.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
-        capability.setCapability(MobileCapabilityType.AUTOMATION_NAME, automationName);
-        capability.setCapability("appPackage", appPath);
-        capability.setCapability("appActivity", appActivity);
-        capability.setCapability(MobileCapabilityType.NO_RESET, noReset);
+    mobAppiumDriver.set(new AndroidDriver(new URL(appiumServer), capability));
+} catch (Exception e) {ErrorHandler.handle(e);}
 
-        mobAppiumDriver.set(new AndroidDriver(new URL(appiumServer), capability));
     }
 
     // driver initiator which gets ready in the @BeforeMethod and does not require to be passed

@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.appium.java_client.AppiumFluentWait;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.*;
 
 public abstract class BasePage {
@@ -31,7 +33,10 @@ public abstract class BasePage {
     // method to wait for the visibility of an element
     protected boolean waitForElementToBeVisible(WebElement element) {
         boolean flag;
-        flag = this.wait.until(arg0 -> element != null && element.isDisplayed());
+        try {
+            flag = this.wait.until(arg0 -> element != null && element.isDisplayed());
+        } catch (NoSuchElementException e) { ErrorHandler.handle(e); flag = false; }
+
         return flag;
     }
 
@@ -84,7 +89,7 @@ public abstract class BasePage {
             TimeUnit.SECONDS.sleep(this.staticTimeOut);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorHandler.handle(e);
             return false;
         }
     }
@@ -99,10 +104,10 @@ public abstract class BasePage {
     }
 
     //     driver.getKeyboard().pressKey(Keys.ENTER);
-    protected boolean pressKeyboardKey(Keys keyValue) {
+    protected boolean pressKeyboardKey(AndroidKey keyValue) {
         boolean flag = false;
         if(keyValue != null) {
-            //driver.getKeyboard().pressKey(keyValue);
+            driver.pressKey(new KeyEvent(keyValue));
             flag = true;
         } else {
             System.out.println("[ERROR]    There is a problem with the Key pressed");
