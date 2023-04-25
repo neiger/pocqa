@@ -22,7 +22,7 @@ public class MapsMainScreen extends BasePage {
      *
      *
      */
-    @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_text_boxx")
+    @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_text_box")
     private WebElement searchOmniboxTxt;
 
     @AndroidFindBy(id="com.google.android.apps.maps:id/search_omnibox_edit_text")
