@@ -16,7 +16,7 @@
             <parameter name="appPath" value="com.google.android.apps.maps"/>
             <parameter name="appActivity" value="com.google.android.maps.MapsActivity"/>
             <parameter name="noReset" value="true"/> <!-- True to prevent prompt for asking permissions again -->
-            <parameter name="appiumServer" value="http://127.0.0.1:4723/wd/hub"/>
+            <parameter name="appiumServer" value="http://127.0.0.1:4723/"/>
         </listener>
     </listeners>
 
