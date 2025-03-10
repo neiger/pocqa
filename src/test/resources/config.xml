@@ -25,7 +25,7 @@
 
     <test name="Android Apps Test Cases">
         <classes>
-            <class name="tests.MapsMainScreenTests">
+            <class name="tests.MapsMainPageTests">
             </class>
         </classes>
     </test>

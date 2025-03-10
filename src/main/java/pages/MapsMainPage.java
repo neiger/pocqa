@@ -1,4 +1,4 @@
-package screens;
+package pages;
 
 import general.BasePage;
 import io.appium.java_client.android.AndroidDriver;
@@ -8,9 +8,9 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class MapsMainScreen extends BasePage {
+public class MapsMainPage extends BasePage {
 
-    public MapsMainScreen(AndroidDriver driver) {
+    public MapsMainPage(AndroidDriver driver) {
         super(driver);
         //PageFactory.initElements(driver, this);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
